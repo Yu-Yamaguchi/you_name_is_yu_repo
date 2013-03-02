@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.8.1/build/cssreset/cssreset-min.css">
+
+<link href="css/jquery-ui.css?v=1" rel="stylesheet">
+<link href="css/bootstrap.css?v=1" rel="stylesheet">
+<link href="css/font-awesome.css?v=1" rel="stylesheet">
+<link href="css/common.css?v=1" rel="stylesheet">
+
+<style>
+
+/* TODO登録フォームエリア */
+#todoEasyInputFormArea {
+	width: 600px;
+	margin: 0 auto;
+	padding: 10px;
+	background-color: #fdfdfd;
+	border: 1px solid #e1e1e8;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+
+/* TODO一覧の一覧 */
+.todoRow {
+	width: 880px;
+	padding: 5px 15px 5px 15px;
+}
+
+/* TODO一覧のステータス */
+.todoRowStatus {
+	width: 120px;
+	float: left;
+}
+
+/* TODO一覧のタイトル */
+.todoRowTitle {
+	width: 590px;
+	float: left;
+	background-color: white;
+}
+
+/* TODO一覧の期限 */
+.todoRowExpire {
+	width: 120px;
+	float: left;
+}
+
+/* TODO一覧の編集／削除ボタン */
+.todoRowBtn {
+	width: 50px;
+	float: left;
+}
+
+/* TODO一覧のメモ欄 */
+.todoRowDetail {
+	margin-bottom: 5px;
+}
+
+/* TODO一覧の下線 */
+.todoLine {
+	border-bottom: solid 1px #cccccc;
+}
+
+/* TODO一覧のステータスコンボボックス */
+.todoStatusChanger {
+	width: 100px;
+	height: 25px;
+	margin-bottom: 0px;
+	padding: 2px 4px 2px 0px;
+	border-color: #ffffff;
+}
+
+/* TODO一覧のステータスコンボボックス マウスオーバー時 */
+.todoStatusChanger:hover {
+	background-color: #eeeeee;
+}
+
+/* TODO一覧のステータスコンボボックスを開いている状態の時のSELECTタグ */
+.todoRowUpper .open select.todoStatusChanger {
+	color: #ffffff;
+	background-color: #999999;
+}
+
+/* TODO一覧のステータスコンボボックスを開いている状態の時のOPTIONタグ */
+.todoRowUpper .open select.todoStatusChanger option {
+	color: #000000;
+	background-color: #ffffff;
+}
+
+/* TODO一覧のメモ欄を展開するボタン */
+.btnToggleDetail {
+	height: 16px;
+	width: 16px;
+	margin: 3px 5px 0 0;
+	position: relative;
+	display: block;
+	float: left;
+}
+
+/* TODO一覧のメモ欄を展開するボタンに表示されるアイコン */
+.btnInnerSmallIcon {
+	font-size: 3px;
+	position: absolute;
+	top: 3px;
+	left: 3px;
+}
+</style>
+
+<title>TODO</title>
+
+</head>
+
+<body>
+
+<!-- ヘッダー -->
+<div id="header">
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="brand" href="/StudyMaterials-Ver_Mock">StudyMaterials [Version : Mock]</a>
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<li><a href="top.html">トップページ</a></li>
+						<li><a href="message-board.html">掲示板</a></li>
+						<li class="active"><a href="todo.html">TODO</a></li>
+					</ul>
+					<ul class="nav" style="float: right;">
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><img src="yamaguchi-icon_normal.png" class="userIcon">you_name_is_yu<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="user_settings.html">設定変更</a></li>
+								<li class="divider"></li>
+								<li><a href="login.html">ログアウト</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div><!--/.nav-collapse collapse -->
+			</div>
+		</div>
+	</div><!-- /.navbar navbar-inverse navbar-fixed-top -->
+</div>
+
+<!-- パンくずリスト -->
+<div class="container">
+	<ul class="breadcrumb">
+	    <li><a href="top.html">トップページ</a> <span class="divider">/</span></li>
+	    <li class="active">TODO</li>
+	</ul>
+</div>
+
+<!-- コンテンツ -->
+<div class="container">
+	<div class="row">
+		<div class="span12">
+			<div class="block">
+				<h3>
+					<a id="linkTodoAdd" href="#"><i class="icon-plus-sign"></i>登録</a>
+				</h3>
+
+				<!-- TODO一覧 -->
+				<div id="todoList" style="max-height: 400px; overflow-y: auto;">
+					<div class="todoRow">
+						<div class="todoRowUpper">
+							<div class="todoRowStatus">
+								<select class="todoStatusChanger">
+									<option value="0">未着手</option>
+									<option value="1">対応中</option>
+									<option value="2">保留</option>
+									<option value="3">確認中</option>
+									<option value="4">完了</option>
+								</select>
+							</div>
+							<div class="todoRowTitle textOverflowNowrap">
+								<strong>TODOのタイトル①</strong>
+							</div>
+							<div class="todoRowExpire">
+								<span class="muted">期限：</span>
+								<span class="expireDateTxt muted">2013/02/21</span>
+							</div>
+							<div class="todoRowBtn">
+								<a href='#' class='link-icon-edit'><i class='icon-edit' title='編集'></i></a>
+								<a href='#' class='link-icon-trash'><i class='icon-trash' title='削除'></i></a>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+						<div class="todoRowDetail textOverflowNowrap">
+							<button class="btn btn-mini btn-inverse btnToggleDetail" type="button" data-toggle="button"><i class="icon-plus icon-white btnInnerSmallIcon"></i></button>
+							<small>TODOを登録したときのメモ情報だよアイウエオアイウエオあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえお
+								かきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこ
+								さしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそ
+								aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+							</small>
+						</div>
+						<div class="todoLine"></div>
+					</div><!-- /.todoRow -->
+				</div>
+			</div><!-- /.block -->
+		</div>
+	</div>
+</div><!-- /.container -->
+		
+<!-- フッター -->
+<div id="footer">
+	<footer class="muted"> Copyright&copy; 2013 YU YAMAGUCHI <footer>
+</div>
+
+<!-- TODO登録／編集画面 -->
+<div id="todoEditFormArea" class="modal fade hide">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3>TODO編集</h3>
+	</div>
+	<form class="form-horizontal">
+		<div class="modal-body">
+			<div class="control-group">
+				<label class="control-label" for="taskTitle">タイトル</label>
+				<div class="controls">
+					<input type="text" name="taskTitle" id="taskTitle" class="span4" maxlength="200">
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label class="control-label" for="taskMemo">メモ</label>
+				<div class="controls">
+					<textarea name="taskMemo" id="taskMemo" class="span4" rows="5" maxlength="4000"></textarea>
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label class="control-label" for="taskStatus">ステータス</label>
+				<div class="controls">
+					<select name="taskStatus" id="taskStatus" class="span2">
+						<option value="0">未着手</option>
+						<option value="1">対応中</option>
+						<option value="2">保留</option>
+						<option value="3">確認中</option>
+						<option value="4">完了</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label class="control-label" for="expireDate">期限</label>
+				<div class="controls form-inline">
+					<div class="input-append">
+						<input type="text" name="expireDate" id="expireDate" class="span2">
+						<span id="calendarAddOn" class="add-on"><i class="icon-calendar"></i></span>
+					</div>
+					<label class="checkbox" for="noExpireSetting">
+						<input type="checkbox" value="1" name="noExpireSetting" id="noExpireSetting">期限を設定しない</input>
+					</label>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div class="modal-footer">
+		<button type="button" id="btnRegist" class="btn btn-primary">登録</button>
+		<button type="button" id="btnEdit" class="btn btn-primary">更新</button>
+		<button type="button" id="btnCancel" class="btn">キャンセル</button>
+	</div>
+</div>
+
+<!-- 処理中を表現するプログレスダイアログ -->
+<div id="progressDialog" class="modal" style="display: none; z-index: 2100;">
+	<div class="modal-header">
+		<h3>処理中...</h3>
+	</div>
+	<div class="modal-body">
+		<div class="progress progress-striped active">
+			<div class="bar" style="width: 100%;"></div>
+		</div>
+	</div>
+</div>
+
+<!-- TODO一覧のテンプレート -->
+<div id="todoRowTemplate" style="display: none;">
+	<div class="todoRow" style="display: none;">
+		<div class="todoRowUpper">
+			<div class="todoRowStatus">
+				<select class="todoStatusChanger">
+					<option value="0">未着手</option>
+					<option value="1">対応中</option>
+					<option value="2">保留</option>
+					<option value="3">確認中</option>
+					<option value="4">完了</option>
+				</select>
+			</div>
+			<div class="todoRowTitle textOverflowNowrap">
+				<strong></strong>
+			</div>
+			<div class="todoRowExpire">
+				<span class="muted">期限：</span>
+				<span class="expireDateTxt muted"></span>
+			</div>
+			<div class="todoRowBtn">
+				<a href='#' class='link-icon-edit'><i class='icon-edit' title='編集'></i></a>
+				<a href='#' class='link-icon-trash'><i class='icon-trash' title='削除'></i></a>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="todoRowDetail textOverflowNowrap">
+			<button class="btn btn-mini btn-inverse btnToggleDetail" type="button" data-toggle="button"><i class="icon-plus icon-white btnInnerSmallIcon"></i></button>
+			<small></small>
+		</div>
+		<div class="todoLine"></div>
+	</div><!-- /.todoRow -->
+</div>
+
+<!-- javascript -->
+<script src="js/jquery.js?v=2"></script>
+<script src="js/jquery-ui.js?v=1"></script>
+<script src="js/jquery.validate.js?v=1"></script>
+<script src="js/jquery.validate.original.js?v=1"></script>
+<script src="js/bootstrap.js?v=1"></script>
+<script src="js/common.js?v=1"></script>
+
+<script src="js/dateformat.js?v=1"></script>
+
+<script>
+
+// TODO編集対象となる行データ
+var $todoEditTarget = null;
+
+$(function(){
+
+	/***** 画面ロード時の処理 *****/
+	// TODO登録フォームのdatepickerを初期化
+	$("#expireDate").datepicker({
+		dateFormat: "yy/mm/dd"
+	});
+
+	// ログイン処理
+	function loginOk() {
+		location.href = "top.html";
+	}
+
+	// 期限の日付プレースホルダ設定（今日の日付）
+	$("#expireDate").attr("placeholder", new DateFormat("yyyy/MM/dd").format(new Date()));
+
+
+	/***** javascriptイベントの登録処理 *****/
+	
+	/**
+	 * カレンダーアイコン押下でカレンダーが表示されるイベント
+	 */
+	$("#calendarAddOn").on("click", function(){
+		$("#expireDate").trigger("focus");
+	});
+
+	/**
+	 * 期日を設定しないチェックボックスに応じて、期限の活性／非活性を制御
+	 */
+	$("#noExpireSetting").on("click", function(){
+		if ($(this).is(":checked")) {
+			$("#expireDate").attr('disabled', 'disabled');
+		} else {
+			$("#expireDate").removeAttr('disabled');
+		}
+	});
+
+	/**
+	 * 登録リンク押下イベント
+	 */
+	$("#linkTodoAdd").on("click", function(){
+		$("#btnEdit").hide();
+		$("#btnRegist").show();
+		$("#todoEditFormArea").modal("show");
+	});
+
+	/**
+	 * 登録ボタン押下時のイベント
+	 */
+	$("#btnRegist").on("click", function(){
+
+		if ($("#todoEditFormArea form").valid()) {
+			$("body").append('<div class="modal-backdrop fade in" style="z-index: 2000;"></div>');
+			$("#progressDialog").slideDown("fast");
+			setTimeout(function() {
+				// プログレスダイアログの非表示
+				$(".modal-backdrop").remove();
+				$("#progressDialog").slideUp("fast");
+	
+				// 登録情報をTODO一覧に追加
+				var $target = $("#todoRowTemplate").children().clone(true);
+				var $form = $("#todoEditFormArea form");
+				$target.find("select.todoStatusChanger").val($form.find("#taskStatus").val());
+				$target.find("div.todoRowTitle strong").text($form.find("#taskTitle").val());
+				$target.find("span.expireDateTxt").text($form.find("#expireDate").val());
+				$target.find("div.todoRowDetail small").text($form.find("#taskMemo").val());
+	
+				$target.appendTo("#todoList");
+				$("#todoList .todoRow:last").slideDown(400);
+				
+				// TODO登録フォームの非表示・リセット
+				$("#todoEditFormArea").modal("hide");
+				resetForm4Bootstrap($("#todoEditFormArea form")[0], validator);
+			}, 5000);
+		}
+	});
+	/**
+	 * 更新ボタン押下時のイベント
+	 */
+	$("#btnEdit").on("click", function(){
+		if ($("#todoEditFormArea form").valid()) {
+			$("body").append('<div class="modal-backdrop fade in" style="z-index: 2000;"></div>');
+			$("#progressDialog").slideDown("fast");
+			setTimeout(function() {
+				// プログレスダイアログの非表示
+				$(".modal-backdrop").remove();
+				$("#progressDialog").slideUp("fast");
+	
+				// 更新情報をTODO一覧に追加
+				var $target = $todoEditTarget;
+				var $form = $("#todoEditFormArea form");
+				$target.find("select.todoStatusChanger").val($form.find("#taskStatus").val());
+				$target.find("div.todoRowTitle strong").text($form.find("#taskTitle").val());
+				$target.find("span.expireDateTxt").text($form.find("#expireDate").val());
+				$target.find("div.todoRowDetail small").text($form.find("#taskMemo").val());
+
+				// TODO登録フォームの非表示・リセット
+				$("#todoEditFormArea").modal("hide");
+				resetForm4Bootstrap($("#todoEditFormArea form")[0], validator);
+				$todoEditTarget = null;
+			}, 5000);
+		}
+	});
+	
+	/**
+	 * キャンセルボタン押下イベント
+	 */
+	$("#btnCancel").on("click", function(){
+		$("#todoEditFormArea").modal("hide");
+		resetForm4Bootstrap($("#todoEditFormArea form")[0], validator);
+	});
+
+	/**
+	 * TODOの登録／編集画面右上にある×ボタン押下イベント
+	 */
+	$("button.close").on("click", function(){
+		resetForm4Bootstrap($("#todoEditFormArea form")[0], validator);
+	});
+
+	/**
+	 * TODOの詳細を表示する場合のボタン押下イベント
+	 */
+	$(document).on("click", ".btnToggleDetail", function(event){
+		// クリックされたbuttonがactiveの場合（押下状態の場合）とそうでない場合とで分岐
+		if ($(this).hasClass("active")) {
+			$(this).parent("div.todoRowDetail").removeClass("textOverflowNowrap")
+				.addClass("wordbreak");
+			convertBr($(this).siblings("small"), "toBrTag");
+			$(this).children("i").removeClass("icon-plus")
+				.addClass("icon-minus");
+		} else {
+			$(this).parent("div.todoRowDetail").removeClass("wordbreak")
+				.addClass("textOverflowNowrap");
+			convertBr($(this).siblings("small"), "toNewLine");
+			$(this).children("i").removeClass("icon-minus")
+				.addClass("icon-plus");
+		}
+	});
+
+	/**
+	 * 編集アイコンボタン押下時のイベント
+	 */
+	$(document).on("click", ".link-icon-edit", function(){
+		/**** フォームに編集用の値をセット ****/
+
+		$("#btnEdit").show();
+		$("#btnRegist").hide();
+		
+		// 編集対象となるTODOの行（DIV）をセット
+		$todoEditTarget = $(this).closest("div.todoRow");
+
+		// フォームに値をセット
+		$("#taskTitle").val($todoEditTarget.find("div.todoRowTitle strong").text());
+		$("#taskMemo").val($todoEditTarget.find("div.todoRowDetail small").text());
+		$("#taskStatus").val($todoEditTarget.find("select.todoStatusChanger").val());
+
+		// TODO:[山口]期限のパターンに応じて設定を切り替える必要あり
+		$("#expireDate").val($todoEditTarget.find("div.todoRowExpire span.expireDateTxt").text());
+		
+		/**** フォームを表示 ****/
+		$("#todoEditFormArea").modal("show");
+	});
+
+	/**
+	 * 削除アイコンボタン押下時のイベント
+	 * リンク集の削除処理（ゴミ箱アイコン押下時）
+	 */
+    $(document).on("click", ".link-icon-trash", function(){
+    	var $base = $(this).closest("div.todoRow");
+    	confirm("確認", "削除します。よろしいですか？", function(){
+    		$base.slideUp(500, function(){
+    			$base.remove();
+        	});
+		});
+    });
+
+	/**
+	 * TODO登録・編集画面のバリデーション
+	 */
+	 var validator = $("#todoEditFormArea form").validate({
+	        rules: {
+		 		taskTitle: {
+	    			maxlength: 200
+	    			, required: true
+	    		}
+	            , taskMemo: {
+	            	maxlength: 4000
+	            }
+	            , expireDate: {
+		            required: function(){return !$("#noExpireSetting").is(":checked");}
+					, date: true
+	            }
+	        }
+		    , highlight: function(element) {
+				$(element).closest('.control-group').removeClass('success').addClass('error');
+			}
+			, success: function(element) {
+				element.text('OK!').addClass('valid').closest('.control-group').removeClass('error').addClass('success');
+			}
+			, errorPlacement: function(error, element) {
+				if (element.attr("id") === "expireDate") {
+					error.appendTo(element.closest("div.controls"));
+				} else {
+					error.insertAfter(element);
+				}
+			}
+	});
+
+ 	/**
+	 * TODO登録・編集画面表示中の黒い背景エリア押下時のイベント
+	 */
+	$(document).on("click", "div.modal-backdrop", function(){
+		resetForm4Bootstrap($("#todoEditFormArea form")[0], validator);
+	});
+});
+
+/**
+ * PREタグではなく、改行文字を含んだテキストを表示するため、
+ * 改行コードをBRタグに変換したり、BRタグを改行コードに変換する処理を行います。
+ * @param $target 変換対象のHTMLを含んだjQueryオブジェクト
+ * @param type  "toBrTag" - 改行コードをBRタグに変換
+ *              "toNewLine"(その他) - BRタグを改行コードに変換
+ */
+function convertBr($target, type) {
+	var replaceTargetStr = $target.html();
+	if (type === "toBrTag") {
+		replaceTargetStr = replaceTargetStr.replace(/\r\n/g, "<br>");
+		replaceTargetStr = replaceTargetStr.replace(/(\n|\r)/g, "<br>");
+		$target.html(replaceTargetStr);
+	} else {
+		replaceTargetStr = replaceTargetStr.replace(/<br>/g, "\n");
+		$target.html(replaceTargetStr);
+	}
+}
+</script>
+
+</body>
+</html>

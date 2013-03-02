@@ -1,0 +1,111 @@
+﻿@charset "utf-8";
+
+/*!
+ * サンプルプログラム v0.0.1
+ *
+ * Copyright(c) 2013 SANSOU SYSTEMS Co., Ltd.
+ */
+
+body {
+  padding-top: 80px; /* 80px to make the container go all the way to the bottom of the topbar */
+}
+
+/* タイトル付きの枠線ブロック */
+.block {
+    margin: 0 0 18px 0;
+    padding: 0 0 15px 0;
+    border: 1px solid #ddd;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px 3px;
+    -webkit-box-shadow: inset 0 1px 0 #ffffff;
+    -moz-box-shadow:inset 0 1px 0 #ffffff;
+    box-shadow: inset 0 1px 0 #ffffff;
+    position: relative;
+}
+
+.block > h3 {
+    font-size: 15px;
+    background: rgb(255,255,255); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(246,246,246,1) 78%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(78%,rgba(246,246,246,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(246,246,246,1) 78%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(246,246,246,1) 78%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(246,246,246,1) 78%,rgba(237,237,237,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(246,246,246,1) 78%,rgba(237,237,237,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+    padding: 0 0 0 10px;
+    margin: 0 0 10px 0;
+    text-shadow: 0 1px 0 #ffffff;
+    line-height: 30px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* フッター */
+#footer {
+    border: 1px solid #e0e0e0;
+    background-color: #f8f8f8;
+    padding: 12px 0 12px 0;
+    text-align: center;
+    margin-top: 15px;
+    font-size: 12px;
+}
+
+/* wordbreak対応 */
+.wordbreak {
+	word-wrap: break-word;
+	word-break: break-all;
+}
+
+/* テキストが幅を超えた時に省略表示される対応 */
+.textOverflow {
+	display: block;
+	overflow: hidden;
+	-ms-text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+}
+
+/* テキストが幅を超えた時に省略表示される対応（white-space: nowrapバージョン） */
+.textOverflowNowrap {
+	display: block;
+	white-space: nowrap;
+	overflow: hidden;
+	-ms-text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+}
+
+.visibleHidden {
+	visibility: hidden;
+}
+
+img.userIcon {
+	width: 24px;
+	height: 24px;
+	float: left;
+	padding-right: 10px;
+}
+
+a {
+	text-decoration: none !important;
+}
+
+a > i {
+	color: #000000;
+}
+
+label.valid {
+	width: 24px;
+	height: 24px;
+	background: url(images/valid.png) center center no-repeat;
+	display: inline-block;
+	text-indent: -9999px;
+}
+
+label.error {
+	font-weight: bold;
+	color: red;
+	padding: 2px 8px;
+	margin-top: 2px;
+}

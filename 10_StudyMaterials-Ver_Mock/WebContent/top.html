@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.8.1/build/cssreset/cssreset-min.css">
+
+<link href="css/jquery-ui.css?v=1" rel="stylesheet">
+<link href="css/bootstrap.css?v=1" rel="stylesheet">
+<link href="css/font-awesome.css?v=1" rel="stylesheet">
+<link href="css/common.css?v=1" rel="stylesheet">
+
+<style>
+	#sortable {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		width: 195px;
+	}
+	
+	#sortable li {
+		padding: 0.4em;
+		height: 13px;
+		width: 190px;
+		display: block;
+		position: relative;
+	}
+	
+	#sortable li span.ui-icon {
+		float: left;
+		margin-left: 3px;
+	}
+	
+	#sortable li div.linkItem {
+		float: left;
+		width: 130px;
+	}
+	
+	#sortable li div.separator {
+		display: inline;
+		float: left;
+		width: 130px;
+		height: 3px;
+		margin: 5px 0px 5px 0;
+		border-bottom: 1px dashed #DDDDDD;
+	}
+	
+	#sortable li div.div-icon-del-edit {
+		float: left;
+		width: 40px;
+	}
+	
+	blockquote p {
+		font-size: 1em;
+	}
+</style>
+
+<title>トップページ</title>
+
+</head>
+
+<body>
+
+<!-- ヘッダー -->
+<div id="header">
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="brand" href="/StudyMaterials-Ver_Mock">StudyMaterials [Version : Mock]</a>
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<li class="active"><a href="top.html">トップページ</a></li>
+						<li><a href="message-board.html">掲示板</a></li>
+						<li><a href="todo.html">TODO</a></li>
+					</ul>
+					<ul class="nav" style="float: right;">
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><img src="yamaguchi-icon_normal.png" class="userIcon">you_name_is_yu<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="user_settings.html">設定変更</a></li>
+								<li class="divider"></li>
+								<li><a href="login.html">ログアウト</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div><!--/.nav-collapse collapse -->
+			</div>
+		</div>
+	</div><!-- /.navbar navbar-inverse navbar-fixed-top -->
+</div>
+
+<!-- パンくずリスト -->
+<div class="container">
+	<ul class="breadcrumb">
+	    <!-- <li><a href="#">Home</a> <span class="divider">/</span></li> -->
+	    <li class="active">トップページ</li>
+	</ul>
+</div>
+
+<!-- コンテンツ -->
+<div class="container">
+	<div class="row">
+		<!-- 画面左側のエリア -->
+		<div class="span2">&nbsp;</div>
+		
+		<!-- 画面中央のエリア -->
+		<div class="span7">
+			<div class="block">
+				<h3>新着情報</h3>
+				<div style="max-height: 400px; overflow-y: auto;">
+					<div class="messageBoardNews">				
+						<h5>
+							<i class="icon-comment" style="margin: 0 10px 0 10px;"></i>
+							掲示板
+						</h5>
+						<ul style="list-style: none;">
+							<li>
+								<blockquote>
+									<p>
+										<a href="#" class="textOverflowNowrap">掲示板のタイトル部分だよaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</a>
+										<small class="textOverflowNowrap">ここにメッセージ部分を若干表示するょaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</small>
+									</p>
+								</blockquote>
+							</li>
+							<li>
+								<blockquote>
+									<p>
+										<a href="#" class="textOverflowNowrap">掲示板のタイトル部分だよ２</a>
+										<small class="textOverflowNowrap">ここにメッセージ部分を若干表示するょ２...</small>
+									</p>
+								</blockquote>
+							</li>
+						</ul>
+					</div>
+					
+					<div class="todoNews">
+						<h5>
+							<i class="icon-list-alt" style="margin: 0 10px 0 10px;"></i>
+							TODO
+						</h5>
+						<ul style="list-style: none;">
+							<li>
+								<blockquote>
+									<p>
+										<a href="#" class="textOverflowNowrap">TODO１</a>
+										<small class="textOverflowNowrap">TODO１</small>
+									</p>
+								</blockquote>
+							</li>
+							<li>
+								<blockquote>
+									<p>
+										<a href="#" class="textOverflowNowrap">TODO２</a>
+										<small class="textOverflowNowrap">TODO２</small>
+									</p>
+								</blockquote>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div><!-- /.block -->
+		</div>
+		
+		<!-- 画面右側のエリア -->
+		<div class="span3">
+			<!-- リンク集（画面右側に表示） -->
+			<div class="block" id="collection-of-links">
+				<h3>
+					<img src="img/icon-link.png" style="width: 16px; height: 16px;">リンク集
+					<span id="span-link-edit" style="float: right; font-size: 10px; margin: 0 5px 0 0;">
+						<a id="link-edit" href="#">編集</a>
+					</span>
+					<span id="span-link-commit-cancel" style="float: right; font-size: 10px; margin: 0 5px 0 0; display: none;">
+						<a id="link-commit" href="#">完了</a>
+						<a id="link-cancel" href="#">キャンセル</a>
+					</span>
+				</h3>
+				<div id="link-operation-btns" style="margin: 0 0 0 10px; font-size: 10px; display: none;">
+					<a id="link-add" href="#frm-edit-link" data-toggle="modal"><img src="img/icon-add-mark.png" style="width: 16px; height: 16px;">リンクの追加</a>					
+					<a id="link-separate-add" href="#"><img src="img/icon-add-mark.png" style="width: 16px; height: 16px;">区切りの追加</a>
+				</div>
+				<div style="max-height: 200px; overflow: auto; overflow-x: hidden; overflow-y: auto;">
+					<ul id="sortable" class="ui-sortable">
+						<li>
+							<div class="linkItem textOverflowNowrap">
+								<a href="#" target="_blank">Item 1aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</a>
+							</div>
+						</li>
+						<li>
+							<div class="linkItem textOverflowNowrap">
+								<a href="#" target="_blank">Item 2</a>
+							</div>
+						</li>
+						<li><div class="separator"></div></li>
+						<li>
+							<div class="linkItem textOverflowNowrap">
+								<a href="#" target="_blank">Item 3</a>
+							</div>
+						</li>
+						<li>
+							<div class="linkItem textOverflowNowrap">
+								<a href="#" target="_blank">Item 4</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div><!-- /.block /#collection-of-links-->
+		</div>
+	</div>
+</div><!-- /.container -->
+
+<!-- フッター -->
+<div id="footer">
+	<footer class="muted"> Copyright&copy; 2013 YU YAMAGUCHI <footer>
+</div>
+
+<!-- リンク集登録／編集フォーム -->
+<div id="frm-edit-link" class="modal hide fade">
+	<div class="modal-header">
+		<h3 id="myModalLabel">リンクの登録</h3>
+	</div>
+	<div class="modal-body">
+		<form id="frm-link-input" class="form-horizontal">
+			<div class="control-group">
+				<label class="control-label" for="linkTitle">タイトル</label>
+				<div class="controls">
+					<input type="text" class="span4" id="linkTitle" name="linkTitle" placeholder="タイトル" maxlength="30">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="linkUrl">URL</label>
+				<div class="controls">
+					<input type="text" class="span4" id="linkUrl" name="linkUrl" placeholder="ex) http://www.sample.co.jp" maxlength="2048">
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" id="btn-reg" class="btn btn-primary">登録</button>
+		<button type="button" id="btn-cancel" class="btn">キャンセル</button>
+	</div>
+</div>
+
+<!-- リンク集一覧のセパレータテンプレート（非表示） -->
+<div id="linkSeparatorTemplate" style="display: none;">
+	<span class="ui-icon ui-icon-arrowthick-2-n-s" style="cursor: move;"></span>
+	<div class="separator"></div>
+	<div class="div-icon-del-edit">
+		<a href="#" class="link-icon-edit visibleHidden" data-href="#">
+			<i class="icon-edit" title="編集"></i>
+		</a>
+		<a href="#" class="link-icon-trash" data-href="#">
+			<i class="icon-trash" title="削除"></i>
+		</a>
+	</div>
+</div>
+
+<!-- リンク集一覧のリンクテンプレート（非表示） -->
+<div id="linkTemplate" style="display: none;">
+	<span class="ui-icon ui-icon-arrowthick-2-n-s" style="cursor: move;"></span>
+	<div class="linkItem textOverflowNowrap">
+		<a href="#" target="_blank" data-href="#">ココにリンク</a>
+	</div>
+	<div class="div-icon-del-edit">
+		<a href="#" class="link-icon-edit" data-href="#">
+			<i class="icon-edit" title="編集"></i>
+		</a>
+		<a href="#" class="link-icon-trash" data-href="#">
+			<i class="icon-trash" title="削除"></i>
+		</a>
+	</div>
+</div>
+
+<!-- javascript -->
+<script src="js/jquery.js?v=2"></script>
+<script src="js/jquery-ui.js?v=1"></script>
+<script src="js/jquery.validate.js?v=1"></script>
+<script src="js/jquery.validate.original.js?v=1"></script>
+<script src="js/bootstrap.js?v=1"></script>
+<script src="js/common.js?v=1"></script>
+
+<script src="js/collection-of-links.js"></script>
+
+<script>
+	$(function(){
+		$("#sortable").sortable({
+			cursor: "move"
+		});
+		$("#sortable").sortable("disable");
+	});
+</script>
+
+</body>
+</html>

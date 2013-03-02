@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.8.1/build/cssreset/cssreset-min.css">
+
+<link href="css/jquery-ui.css?v=1" rel="stylesheet">
+<link href="css/bootstrap.css?v=1" rel="stylesheet">
+<link href="css/font-awesome.css?v=1" rel="stylesheet">
+<link href="css/common.css?v=1" rel="stylesheet">
+
+<style>
+	#sortable { list-style-type: none; margin: 0; padding: 0; width: 80%; }
+	#sortable li { padding: 0.4em; padding-left: 1.5em; height: 13px; width: 100%;}
+	#sortable li span { position: absolute; margin-left: -1.3em; }
+	li div.separator {
+		display: inline;
+		float: left;
+		width: 120px;
+		height: 3px;
+		margin: 5px 0px 5px 0;
+		border-bottom: 1px dashed #DDDDDD;
+	}
+	
+	.div-icon-del-edit {
+		float: right;
+	}
+	
+	blockquote p {
+		font-size: 1em;
+	}
+</style>
+
+<title>設定変更</title>
+
+</head>
+
+<body>
+
+<!-- ヘッダー -->
+<div id="header">
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="brand" href="/StudyMaterials-Ver_Mock">StudyMaterials [Version : Mock]</a>
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<li><a href="top.html">トップページ</a></li>
+						<li><a href="message-board.html">掲示板</a></li>
+						<li><a href="todo.html">TODO</a></li>
+					</ul>
+					<ul class="nav" style="float: right;">
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><img src="yamaguchi-icon_normal.png" class="userIcon">you_name_is_yu<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="user_settings.html">設定変更</a></li>
+								<li class="divider"></li>
+								<li><a href="login.html">ログアウト</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div><!--/.nav-collapse collapse -->
+			</div>
+		</div>
+	</div><!-- /.navbar navbar-inverse navbar-fixed-top -->
+</div>
+
+<!-- パンくずリスト -->
+<div class="container">
+	<ul class="breadcrumb">
+	    <li><a href="top.html">トップページ</a> <span class="divider">/</span></li>
+	    <li class="active">設定変更</li>
+	</ul>
+</div>
+
+<!-- コンテンツ -->
+<div class="container">
+	<!-- タイトル -->
+	<section>
+		<h5>ユーザー情報の変更</h5>
+		<p fontsize="6"> ユーザー情報の設定は以下より行ってください。</p>
+	</section>
+
+
+<div class="container">
+<div class="span6">
+<!-- タブメニュー -->
+<ul class="nav nav-tabs">
+<li class="active"><a href="#user" data-toggle="tab">ユーザー設定</a></li>
+<li><a href="#password" data-toggle="tab">パスワード設定</a></li>
+<li><a href="#icon" data-toggle="tab">アイコン編集</a></li>
+</ul>
+ 
+
+<div class="tab-content">
+	<div class="tab-pane active" id="user">
+		<p>プロフィール情報を変更するには、必要な項目を記入して更新してください。</p>
+		<form method="post">
+			<div class="clearfix">
+			    <label for="userName">ニックネーム</label>
+	    		<div class="input">
+	        		<input class="span3 disabled" size="30" type="text" id="userName" name="userName" value="cazuya" />
+	        		<div>※ユーザー名条件説明</div>
+	        	</div>
+			</div>
+			<div class="clearfix">
+				<label for="telNo">電話番号</label>
+		    	<div class="input">
+		    		<input class="span3" size="30" type="text" id="telNo" name="telNo" value="" />
+		    	</div>
+				<label for="mailAddress">メールアドレス</label>
+		    	<div class="input">
+		    		<input class="span3" size="30" type="text" id="mailAddress" name="mailAddress" value="" />
+		    	</div>
+			</div>
+			<input type="hidden" name="one_time_token" value="@@@@@" />
+		</form>
+	</div><!-- .tab-pane -->
+
+	<div class="tab-pane" id="password">
+	<p>パスワードを変更するには、必要な項目を記入して更新してください。</p>
+	<form class="@@@@@" action="/user/update" method="post">
+		<div class="clearfix">
+		    <label for="">パスワード</label>
+	    		<div class="input">
+	        		<input class="span4 disabled" size="30" type="text" id="user_password" name="user_password" />
+	        		<div class="@@@@@">※password条件説明</div>
+	        	</div>
+		</div>
+		<input type="hidden" name="one_time_token" value="@@@@@" />
+	</form>
+	</div><!-- タブメニュー@パスワード設定END -->
+	
+	<!-- タブメニュー@アイコン編集START -->
+	<div class="tab-pane"  id="icon">aaaaa
+	</div><!-- タブメニュー@アイコン編集END -->
+</div>
+
+</div>
+</div>
+ 
+
+
+
+
+
+</div><!-- /tab-content -->
+</div><!-- /main -->
+</div><!-- /row -->
+</div><!-- /container -->
+
+
+
+
+		
+<!-- フッター -->
+<div id="footer">
+	<footer class="muted"> Copyright&copy; 2013 YU YAMAGUCHI </footer>
+</div>
+
+<!-- javascript -->
+<script src="js/jquery.js?v=2"></script>
+<script src="js/jquery-ui.js?v=1"></script>
+<script src="js/jquery.validate.js?v=1"></script>
+<script src="js/jquery.validate.original.js?v=1"></script>
+<script src="js/bootstrap.js?v=1"></script>
+<script src="js/common.js?v=1"></script>
+
+<script>
+	$(function(){
+		$("#sortable").sortable({
+			cursor: "move"
+		});
+		$("#sortable").sortable("disable");
+	});
+</script>
+
+</body>
+</html>
