@@ -38,6 +38,7 @@
 /* TODO一覧のステータス */
 .todoRowStatus {
 	width: 120px;
+	position: relative;
 	float: left;
 }
 
@@ -94,6 +95,11 @@
 .todoRowUpper .open select.todoStatusChanger option {
 	color: #000000;
 	background-color: #ffffff;
+}
+
+/* TODO一覧のステータスコンボボックスが非活性状態の時 */
+select.todoStatusChanger[disabled=disabled] {
+	color: #999999;
 }
 
 /* TODO一覧のメモ欄を展開するボタン */
@@ -190,7 +196,7 @@
 								<a href='#' class='link-icon-edit'><i class='icon-edit' title='編集'></i></a>
 								<a href='#' class='link-icon-trash'><i class='icon-trash' title='削除'></i></a>
 							</div>
-						</div>
+						</div><!-- /.todoRowUpper -->
 						<div class="clearfix"></div>
 						<div class="todoRowDetail textOverflowNowrap">
 							<button class="btn btn-mini btn-inverse btnToggleDetail" type="button" data-toggle="button"><i class="icon-plus icon-white btnInnerSmallIcon"></i></button>
@@ -199,7 +205,40 @@
 								さしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそ
 								aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 							</small>
-						</div>
+						</div><!-- /.todoRowDetail -->
+						
+						<div class="todoLine"></div>
+					</div><!-- /.todoRow -->
+					
+					<div class="todoRow">
+						<div class="todoRowUpper">
+							<div class="todoRowStatus">
+								<select class="todoStatusChanger">
+									<option value="0">未着手</option>
+									<option value="1" selected>対応中</option>
+									<option value="2">保留</option>
+									<option value="3">確認中</option>
+									<option value="4">完了</option>
+								</select>
+							</div>
+							<div class="todoRowTitle textOverflowNowrap">
+								<strong>TODOのタイトル②</strong>
+							</div>
+							<div class="todoRowExpire">
+								<span class="muted">期限：</span>
+								<span class="expireDateTxt muted">2013/02/21</span>
+							</div>
+							<div class="todoRowBtn">
+								<a href='#' class='link-icon-edit'><i class='icon-edit' title='編集'></i></a>
+								<a href='#' class='link-icon-trash'><i class='icon-trash' title='削除'></i></a>
+							</div>
+						</div><!-- /.todoRowUpper -->
+						<div class="clearfix"></div>
+						<div class="todoRowDetail textOverflowNowrap">
+							<button class="btn btn-mini btn-inverse btnToggleDetail" type="button" data-toggle="button"><i class="icon-plus icon-white btnInnerSmallIcon"></i></button>
+							<small>ほげほげ</small>
+						</div><!-- /.todoRowDetail -->
+						
 						<div class="todoLine"></div>
 					</div><!-- /.todoRow -->
 				</div>
@@ -218,7 +257,8 @@
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h3>TODO編集</h3>
-	</div>
+	</div><!-- /.modal-header -->
+	
 	<form class="form-horizontal">
 		<div class="modal-body">
 			<div class="control-group">
@@ -270,7 +310,7 @@
 </div>
 
 <!-- 処理中を表現するプログレスダイアログ -->
-<div id="progressDialog" class="modal" style="display: none; z-index: 2100;">
+<div id="progressDialog" class="modal" style="display: none; z-index: 2100; top: 30%;">
 	<div class="modal-header">
 		<h3>処理中...</h3>
 	</div>
@@ -338,16 +378,11 @@ $(function(){
 		dateFormat: "yy/mm/dd"
 	});
 
-	// ログイン処理
-	function loginOk() {
-		location.href = "top.html";
-	}
-
 	// 期限の日付プレースホルダ設定（今日の日付）
 	$("#expireDate").attr("placeholder", new DateFormat("yyyy/MM/dd").format(new Date()));
 
 
-	/***** javascriptイベントの登録処理 *****/
+	/***** javascriptイベント処理 *****/
 	
 	/**
 	 * カレンダーアイコン押下でカレンダーが表示されるイベント
@@ -373,6 +408,8 @@ $(function(){
 	$("#linkTodoAdd").on("click", function(){
 		$("#btnEdit").hide();
 		$("#btnRegist").show();
+		$("#noExpireSetting").removeAttr("checked");
+		$("#expireDate").removeAttr("disabled");
 		$("#todoEditFormArea").modal("show");
 	});
 
@@ -382,11 +419,11 @@ $(function(){
 	$("#btnRegist").on("click", function(){
 
 		if ($("#todoEditFormArea form").valid()) {
-			$("body").append('<div class="modal-backdrop fade in" style="z-index: 2000;"></div>');
+			$("body").append('<div class="progressBackdrop"></div>');
 			$("#progressDialog").slideDown("fast");
 			setTimeout(function() {
 				// プログレスダイアログの非表示
-				$(".modal-backdrop").remove();
+				$("div.modal-backdrop, div.progressBackdrop").remove();
 				$("#progressDialog").slideUp("fast");
 	
 				// 登録情報をTODO一覧に追加
@@ -394,7 +431,15 @@ $(function(){
 				var $form = $("#todoEditFormArea form");
 				$target.find("select.todoStatusChanger").val($form.find("#taskStatus").val());
 				$target.find("div.todoRowTitle strong").text($form.find("#taskTitle").val());
-				$target.find("span.expireDateTxt").text($form.find("#expireDate").val());
+
+				if ($form.find("#noExpireSetting").is(":checked")) {
+					$target.find("span.expireDateTxt").text("無期限");
+					$.data($target.find("span.expireDateTxt")[0], "check-no-expire", true);
+				} else {
+					$target.find("span.expireDateTxt").text($form.find("#expireDate").val());
+					$.data($target.find("span.expireDateTxt")[0], "check-no-expire", false);
+				}
+				
 				$target.find("div.todoRowDetail small").text($form.find("#taskMemo").val());
 	
 				$target.appendTo("#todoList");
@@ -411,25 +456,41 @@ $(function(){
 	 */
 	$("#btnEdit").on("click", function(){
 		if ($("#todoEditFormArea form").valid()) {
-			$("body").append('<div class="modal-backdrop fade in" style="z-index: 2000;"></div>');
+			$("body").append('<div class="progressBackdrop"></div>');
 			$("#progressDialog").slideDown("fast");
 			setTimeout(function() {
 				// プログレスダイアログの非表示
-				$(".modal-backdrop").remove();
+				$("div.modal-backdrop, div.progressBackdrop").remove();
 				$("#progressDialog").slideUp("fast");
 	
 				// 更新情報をTODO一覧に追加
-				var $target = $todoEditTarget;
+				var $target = $todoEditTarget.clone(true);
 				var $form = $("#todoEditFormArea form");
+				$target.hide();
 				$target.find("select.todoStatusChanger").val($form.find("#taskStatus").val());
 				$target.find("div.todoRowTitle strong").text($form.find("#taskTitle").val());
-				$target.find("span.expireDateTxt").text($form.find("#expireDate").val());
+				
+				if ($form.find("#noExpireSetting").is(":checked")) {
+					$target.find("span.expireDateTxt").text("無期限");
+					$.data($target.find("span.expireDateTxt")[0], "check-no-expire", true);
+				} else {
+					$target.find("span.expireDateTxt").text($form.find("#expireDate").val());
+					$.data($target.find("span.expireDateTxt")[0], "check-no-expire", false);
+				}
+				
 				$target.find("div.todoRowDetail small").text($form.find("#taskMemo").val());
 
-				// TODO登録フォームの非表示・リセット
+				// TODO登録・更新フォームの非表示・リセット
 				$("#todoEditFormArea").modal("hide");
 				resetForm4Bootstrap($("#todoEditFormArea form")[0], validator);
-				$todoEditTarget = null;
+
+				// 更新した値をTODO一覧に反映
+				$target.appendTo("#todoList");
+				$("#todoList .todoRow:last").slideDown(400);
+				$todoEditTarget.slideUp(400, function(){
+					$todoEditTarget.remove();
+					$todoEditTarget = null;
+				});
 			}, 5000);
 		}
 	});
@@ -487,7 +548,14 @@ $(function(){
 		$("#taskStatus").val($todoEditTarget.find("select.todoStatusChanger").val());
 
 		// TODO:[山口]期限のパターンに応じて設定を切り替える必要あり
-		$("#expireDate").val($todoEditTarget.find("div.todoRowExpire span.expireDateTxt").text());
+		if ($.data($todoEditTarget.find("span.expireDateTxt")[0], "check-no-expire") === true) {
+			$("#noExpireSetting").attr("checked", "checked");
+			$("#expireDate").attr("disabled", "disabled");
+		} else {
+			$("#noExpireSetting").removeAttr("checked");
+			$("#expireDate").removeAttr("disabled");
+			$("#expireDate").val($todoEditTarget.find("div.todoRowExpire span.expireDateTxt").text());
+		}
 		
 		/**** フォームを表示 ****/
 		$("#todoEditFormArea").modal("show");
@@ -506,6 +574,25 @@ $(function(){
 		});
     });
 
+    /**
+     * TODOのステータス変更時のイベント
+     */
+	$(document).on("change", "select.todoStatusChanger", function(){
+		// こんな書き方で、選択中のテキストや値が取得できるので、あとはAJAXでの更新処理を実現するだけ。
+		// $(this).children("option:selected").text())
+		
+		// ステータスのコンボボックスに処理中を表現するアイコンを追加し、コンボボックスを非活性にして、処理が完了すると元に戻る。
+		$("<i class='icon-spinner icon-spin' style='position: absolute; top: 5.5px; left: 60px;'></i>").appendTo($(this).closest("div.todoRowStatus"));
+		$(this).blur();
+		$(this).attr("disabled", "disabled");
+		var $_this = $(this);
+		setTimeout(function(){
+			$_this.removeAttr("disabled");
+			$("i.icon-spinner").remove();
+		}, 3000);
+		
+	});
+ 	
 	/**
 	 * TODO登録・編集画面のバリデーション
 	 */
