@@ -17,108 +17,109 @@
 
 <style>
 
-/* TODO登録フォームエリア */
-#todoEasyInputFormArea {
-	width: 600px;
-	margin: 0 auto;
-	padding: 10px;
-	background-color: #fdfdfd;
-	border: 1px solid #e1e1e8;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
-}
-
-/* TODO一覧の一覧 */
-.todoRow {
-	width: 880px;
-	padding: 5px 15px 5px 15px;
-}
-
-/* TODO一覧のステータス */
-.todoRowStatus {
-	width: 120px;
-	position: relative;
-	float: left;
-}
-
-/* TODO一覧のタイトル */
-.todoRowTitle {
-	width: 590px;
-	float: left;
-	background-color: white;
-}
-
-/* TODO一覧の期限 */
-.todoRowExpire {
-	width: 120px;
-	float: left;
-}
-
-/* TODO一覧の編集／削除ボタン */
-.todoRowBtn {
-	width: 50px;
-	float: left;
-}
-
-/* TODO一覧のメモ欄 */
-.todoRowDetail {
-	margin-bottom: 5px;
-}
-
-/* TODO一覧の下線 */
-.todoLine {
-	border-bottom: solid 1px #cccccc;
-}
-
-/* TODO一覧のステータスコンボボックス */
-.todoStatusChanger {
-	width: 100px;
-	height: 25px;
-	margin-bottom: 0px;
-	padding: 2px 4px 2px 0px;
-	border-color: #ffffff;
-}
-
-/* TODO一覧のステータスコンボボックス マウスオーバー時 */
-.todoStatusChanger:hover {
-	background-color: #eeeeee;
-}
-
-/* TODO一覧のステータスコンボボックスを開いている状態の時のSELECTタグ */
-.todoRowUpper .open select.todoStatusChanger {
-	color: #ffffff;
-	background-color: #999999;
-}
-
-/* TODO一覧のステータスコンボボックスを開いている状態の時のOPTIONタグ */
-.todoRowUpper .open select.todoStatusChanger option {
-	color: #000000;
-	background-color: #ffffff;
-}
-
-/* TODO一覧のステータスコンボボックスが非活性状態の時 */
-select.todoStatusChanger[disabled=disabled] {
-	color: #999999;
-}
-
-/* TODO一覧のメモ欄を展開するボタン */
-.btnToggleDetail {
-	height: 16px;
-	width: 16px;
-	margin: 3px 5px 0 0;
-	position: relative;
-	display: block;
-	float: left;
-}
-
-/* TODO一覧のメモ欄を展開するボタンに表示されるアイコン */
-.btnInnerSmallIcon {
-	font-size: 3px;
-	position: absolute;
-	top: 3px;
-	left: 3px;
-}
+	/* TODO登録フォームエリア */
+	#todoEasyInputFormArea {
+		width: 600px;
+		margin: 0 auto;
+		padding: 10px;
+		background-color: #fdfdfd;
+		border: 1px solid #e1e1e8;
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+		border-radius: 4px;
+	}
+	
+	/* TODO一覧の一覧 */
+	.todoRow {
+		width: 880px;
+		padding: 5px 15px 5px 15px;
+	}
+	
+	/* TODO一覧のステータス */
+	.todoRowStatus {
+		width: 120px;
+		position: relative;
+		float: left;
+	}
+	
+	/* TODO一覧のタイトル */
+	.todoRowTitle {
+		width: 590px;
+		float: left;
+		background-color: white;
+	}
+	
+	/* TODO一覧の期限 */
+	.todoRowExpire {
+		width: 120px;
+		float: left;
+	}
+	
+	/* TODO一覧の編集／削除ボタン */
+	.todoRowBtn {
+		width: 50px;
+		float: left;
+	}
+	
+	/* TODO一覧のメモ欄 */
+	.todoRowDetail {
+		margin-bottom: 5px;
+	}
+	
+	/* TODO一覧の下線 */
+	.todoLine {
+		border-bottom: solid 1px #cccccc;
+	}
+	
+	/* TODO一覧のステータスコンボボックス */
+	.todoStatusChanger {
+		width: 100px;
+		height: 25px;
+		margin-bottom: 0px;
+		padding: 2px 4px 2px 0px;
+		border-color: #ffffff;
+	}
+	
+	/* TODO一覧のステータスコンボボックス マウスオーバー時 */
+	.todoStatusChanger:hover {
+		background-color: #eeeeee;
+	}
+	
+	/* TODO一覧のステータスコンボボックスを開いている状態の時のSELECTタグ */
+	.todoRowUpper .open select.todoStatusChanger {
+		color: #ffffff;
+		background-color: #999999;
+	}
+	
+	/* TODO一覧のステータスコンボボックスを開いている状態の時のOPTIONタグ */
+	.todoRowUpper .open select.todoStatusChanger option {
+		color: #000000;
+		background-color: #ffffff;
+	}
+	
+	/* TODO一覧のステータスコンボボックスが非活性状態の時 */
+	select.todoStatusChanger[disabled=disabled] {
+		color: #999999;
+	}
+	
+	/* TODO一覧のメモ欄を展開するボタン */
+	.btnToggleDetail {
+		height: 16px;
+		width: 16px;
+		margin: 3px 5px 0 0;
+		position: relative;
+		display: block;
+		float: left;
+	}
+	
+	/* TODO一覧のメモ欄を展開するボタンに表示されるアイコン */
+	.btnInnerSmallIcon {
+		font-size: 3px;
+		position: absolute;
+		top: 3px;
+		left: 3px;
+	}
+	
 </style>
 
 <title>TODO</title>
@@ -135,9 +136,9 @@ select.todoStatusChanger[disabled=disabled] {
 				<a class="brand" href="/StudyMaterials-Ver_Mock">StudyMaterials [Version : Mock]</a>
 				<div class="nav-collapse collapse">
 					<ul class="nav">
-						<li><a href="top.html">トップページ</a></li>
-						<li><a href="message-board.html">掲示板</a></li>
-						<li class="active"><a href="todo.html">TODO</a></li>
+						<li><a href="top.html"><i class="icon-home"></i>トップページ</a></li>
+						<li><a href="message-board.html"><i class="icon-comment"></i>掲示板</a></li>
+						<li class="active"><a href="todo.html"><i class="icon-list-alt"></i>TODO</a></li>
 					</ul>
 					<ul class="nav" style="float: right;">
 						<li class="dropdown">
@@ -158,8 +159,8 @@ select.todoStatusChanger[disabled=disabled] {
 <!-- パンくずリスト -->
 <div class="container">
 	<ul class="breadcrumb">
-	    <li><a href="top.html">トップページ</a> <span class="divider">/</span></li>
-	    <li class="active">TODO</li>
+		<li><a href="top.html">トップページ</a> <span class="divider">/</span></li>
+		<li class="active">TODO</li>
 	</ul>
 </div>
 
@@ -451,6 +452,7 @@ $(function(){
 			}, 5000);
 		}
 	});
+
 	/**
 	 * 更新ボタン押下時のイベント
 	 */
@@ -534,8 +536,7 @@ $(function(){
 	 * 編集アイコンボタン押下時のイベント
 	 */
 	$(document).on("click", ".link-icon-edit", function(){
-		/**** フォームに編集用の値をセット ****/
-
+		// 登録ボタン／更新ボタンの表示切替え
 		$("#btnEdit").show();
 		$("#btnRegist").hide();
 		
@@ -547,7 +548,7 @@ $(function(){
 		$("#taskMemo").val($todoEditTarget.find("div.todoRowDetail small").text());
 		$("#taskStatus").val($todoEditTarget.find("select.todoStatusChanger").val());
 
-		// TODO:[山口]期限のパターンに応じて設定を切り替える必要あり
+		// 期限のパターンに応じて設定を切り替える
 		if ($.data($todoEditTarget.find("span.expireDateTxt")[0], "check-no-expire") === true) {
 			$("#noExpireSetting").attr("checked", "checked");
 			$("#expireDate").attr("disabled", "disabled");
@@ -556,8 +557,8 @@ $(function(){
 			$("#expireDate").removeAttr("disabled");
 			$("#expireDate").val($todoEditTarget.find("div.todoRowExpire span.expireDateTxt").text());
 		}
-		
-		/**** フォームを表示 ****/
+
+		// フォームの表示
 		$("#todoEditFormArea").modal("show");
 	});
 
@@ -565,18 +566,18 @@ $(function(){
 	 * 削除アイコンボタン押下時のイベント
 	 * リンク集の削除処理（ゴミ箱アイコン押下時）
 	 */
-    $(document).on("click", ".link-icon-trash", function(){
-    	var $base = $(this).closest("div.todoRow");
-    	confirm("確認", "削除します。よろしいですか？", function(){
-    		$base.slideUp(500, function(){
-    			$base.remove();
-        	});
+	$(document).on("click", ".link-icon-trash", function(){
+		var $base = $(this).closest("div.todoRow");
+		confirm("確認", "削除します。よろしいですか？", function(){
+			$base.slideUp(500, function(){
+				$base.remove();
+			});
 		});
-    });
+	});
 
-    /**
-     * TODOのステータス変更時のイベント
-     */
+	/**
+	 * TODOのステータス変更時のイベント
+	 */
 	$(document).on("change", "select.todoStatusChanger", function(){
 		// こんな書き方で、選択中のテキストや値が取得できるので、あとはAJAXでの更新処理を実現するだけ。
 		// $(this).children("option:selected").text())
@@ -597,20 +598,20 @@ $(function(){
 	 * TODO登録・編集画面のバリデーション
 	 */
 	 var validator = $("#todoEditFormArea form").validate({
-	        rules: {
+			rules: {
 		 		taskTitle: {
-	    			maxlength: 200
-	    			, required: true
-	    		}
-	            , taskMemo: {
-	            	maxlength: 4000
-	            }
-	            , expireDate: {
-		            required: function(){return !$("#noExpireSetting").is(":checked");}
+					maxlength: 200
+					, required: true
+				}
+				, taskMemo: {
+					maxlength: 4000
+				}
+				, expireDate: {
+					required: function(){return !$("#noExpireSetting").is(":checked");}
 					, date: true
-	            }
-	        }
-		    , highlight: function(element) {
+				}
+			}
+			, highlight: function(element) {
 				$(element).closest('.control-group').removeClass('success').addClass('error');
 			}
 			, success: function(element) {
@@ -623,6 +624,8 @@ $(function(){
 					error.insertAfter(element);
 				}
 			}
+			, onfocusout: false
+			, onclick: false
 	});
 
  	/**

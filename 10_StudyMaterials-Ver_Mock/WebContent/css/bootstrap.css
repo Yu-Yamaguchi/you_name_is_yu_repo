@@ -1,5 +1,5 @@
 /*!
- * Bootstrap v2.3.0
+ * Bootstrap v2.3.1
  *
  * Copyright 2012 Twitter, Inc
  * Licensed under the Apache License v2.0
@@ -5183,8 +5183,8 @@ input[type="submit"].btn.btn-mini {
 
 .modal-backdrop,
 .modal-backdrop.fade.in {
-  opacity: 0.2;
-  filter: alpha(opacity=20);
+  opacity: 0.8;
+  filter: alpha(opacity=80);
 }
 
 .modal {

@@ -121,3 +121,33 @@ div.progressBackdrop {
 	background-color: #000000;
 	opacity: 0.0;
 }
+
+/* ▽▼▽▼▽▼ twitter bootstrap のスタイル上書き又は追加 ▽▼▽▼▽▼ */
+.navbar-inverse .nav > li > a >i {
+	color: #999999;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	margin-right: 5px;
+}
+
+.navbar .nav > li > a:focus > i,
+.navbar .nav > li > a:hover > i {
+  color: #ffffff;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.navbar .nav > .active > a > i,
+.navbar .nav > .active > a:hover > i,
+.navbar .nav > .active > a:focus > i {
+  color: #ffffff;
+  text-decoration: none;
+  -webkit-box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);
+     -moz-box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);
+          box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);
+}
+
+.modal-backdrop,
+.modal-backdrop.fade.in {
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+}

@@ -118,7 +118,9 @@ $(function(){
 		}
 		, success: function(element) {
 			element.text('OK!').addClass('valid').closest('.control-group').removeClass('error').addClass('success');
-		}	
+		}
+		, onfocusout: false
+		, onclick: false
 	});
 });
 </script>

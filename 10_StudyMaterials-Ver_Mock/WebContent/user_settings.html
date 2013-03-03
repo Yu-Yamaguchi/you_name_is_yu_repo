@@ -51,9 +51,9 @@
 				<a class="brand" href="/StudyMaterials-Ver_Mock">StudyMaterials [Version : Mock]</a>
 				<div class="nav-collapse collapse">
 					<ul class="nav">
-						<li><a href="top.html">トップページ</a></li>
-						<li><a href="message-board.html">掲示板</a></li>
-						<li><a href="todo.html">TODO</a></li>
+						<li><a href="top.html"><i class="icon-home"></i>トップページ</a></li>
+						<li><a href="message-board.html"><i class="icon-comment"></i>掲示板</a></li>
+						<li><a href="todo.html"><i class="icon-list-alt"></i>TODO</a></li>
 					</ul>
 					<ul class="nav" style="float: right;">
 						<li class="dropdown">
@@ -74,8 +74,8 @@
 <!-- パンくずリスト -->
 <div class="container">
 	<ul class="breadcrumb">
-	    <li><a href="top.html">トップページ</a> <span class="divider">/</span></li>
-	    <li class="active">設定変更</li>
+		<li><a href="top.html">トップページ</a> <span class="divider">/</span></li>
+		<li class="active">設定変更</li>
 	</ul>
 </div>
 
@@ -103,21 +103,21 @@
 		<p>プロフィール情報を変更するには、必要な項目を記入して更新してください。</p>
 		<form method="post">
 			<div class="clearfix">
-			    <label for="userName">ニックネーム</label>
-	    		<div class="input">
-	        		<input class="span3 disabled" size="30" type="text" id="userName" name="userName" value="cazuya" />
-	        		<div>※ユーザー名条件説明</div>
-	        	</div>
+				<label for="userName">ニックネーム</label>
+				<div class="input">
+					<input class="span3 disabled" size="30" type="text" id="userName" name="userName" value="cazuya" />
+					<div>※ユーザー名条件説明</div>
+				</div>
 			</div>
 			<div class="clearfix">
 				<label for="telNo">電話番号</label>
-		    	<div class="input">
-		    		<input class="span3" size="30" type="text" id="telNo" name="telNo" value="" />
-		    	</div>
+				<div class="input">
+					<input class="span3" size="30" type="text" id="telNo" name="telNo" value="" />
+				</div>
 				<label for="mailAddress">メールアドレス</label>
-		    	<div class="input">
-		    		<input class="span3" size="30" type="text" id="mailAddress" name="mailAddress" value="" />
-		    	</div>
+				<div class="input">
+					<input class="span3" size="30" type="text" id="mailAddress" name="mailAddress" value="" />
+				</div>
 			</div>
 			<input type="hidden" name="one_time_token" value="@@@@@" />
 		</form>
@@ -127,11 +127,11 @@
 	<p>パスワードを変更するには、必要な項目を記入して更新してください。</p>
 	<form class="@@@@@" action="/user/update" method="post">
 		<div class="clearfix">
-		    <label for="">パスワード</label>
-	    		<div class="input">
-	        		<input class="span4 disabled" size="30" type="text" id="user_password" name="user_password" />
-	        		<div class="@@@@@">※password条件説明</div>
-	        	</div>
+			<label for="">パスワード</label>
+				<div class="input">
+					<input class="span4 disabled" size="30" type="text" id="user_password" name="user_password" />
+					<div class="@@@@@">※password条件説明</div>
+				</div>
 		</div>
 		<input type="hidden" name="one_time_token" value="@@@@@" />
 	</form>
@@ -144,21 +144,12 @@
 
 </div>
 </div>
- 
-
-
-
-
 
 </div><!-- /tab-content -->
 </div><!-- /main -->
 </div><!-- /row -->
 </div><!-- /container -->
 
-
-
-
-		
 <!-- フッター -->
 <div id="footer">
 	<footer class="muted"> Copyright&copy; 2013 YU YAMAGUCHI </footer>
@@ -172,14 +163,6 @@
 <script src="js/bootstrap.js?v=1"></script>
 <script src="js/common.js?v=1"></script>
 
-<script>
-	$(function(){
-		$("#sortable").sortable({
-			cursor: "move"
-		});
-		$("#sortable").sortable("disable");
-	});
-</script>
 
 </body>
 </html>

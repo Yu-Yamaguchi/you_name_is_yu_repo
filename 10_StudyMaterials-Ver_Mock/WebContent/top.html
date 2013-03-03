@@ -74,9 +74,9 @@
 				<a class="brand" href="/StudyMaterials-Ver_Mock">StudyMaterials [Version : Mock]</a>
 				<div class="nav-collapse collapse">
 					<ul class="nav">
-						<li class="active"><a href="top.html">トップページ</a></li>
-						<li><a href="message-board.html">掲示板</a></li>
-						<li><a href="todo.html">TODO</a></li>
+						<li class="active"><a href="top.html"><i class="icon-home"></i>トップページ</a></li>
+						<li><a href="message-board.html"><i class="icon-comment"></i>掲示板</a></li>
+						<li><a href="todo.html"><i class="icon-list-alt"></i>TODO</a></li>
 					</ul>
 					<ul class="nav" style="float: right;">
 						<li class="dropdown">
@@ -97,8 +97,8 @@
 <!-- パンくずリスト -->
 <div class="container">
 	<ul class="breadcrumb">
-	    <!-- <li><a href="#">Home</a> <span class="divider">/</span></li> -->
-	    <li class="active">トップページ</li>
+		<!-- <li><a href="#">Home</a> <span class="divider">/</span></li> -->
+		<li class="active">トップページ</li>
 	</ul>
 </div>
 
@@ -113,7 +113,7 @@
 			<div class="block">
 				<h3>新着情報</h3>
 				<div style="max-height: 400px; overflow-y: auto;">
-					<div class="messageBoardNews">				
+					<div class="messageBoardNews">
 						<h5>
 							<i class="icon-comment" style="margin: 0 10px 0 10px;"></i>
 							掲示板
@@ -181,30 +181,30 @@
 					</span>
 				</h3>
 				<div id="link-operation-btns" style="margin: 0 0 0 10px; font-size: 10px; display: none;">
-					<a id="link-add" href="#frm-edit-link" data-toggle="modal"><img src="img/icon-add-mark.png" style="width: 16px; height: 16px;">リンクの追加</a>					
-					<a id="link-separate-add" href="#"><img src="img/icon-add-mark.png" style="width: 16px; height: 16px;">区切りの追加</a>
+					<a id="addLink" href="#"><img src="img/icon-add-mark.png" style="width: 15px; height: 15px;">リンクの追加</a>
+					<a id="addSeparate" href="#"><img src="img/icon-add-mark.png" style="width: 15px; height: 15px;">区切りの追加</a>
 				</div>
 				<div style="max-height: 200px; overflow: auto; overflow-x: hidden; overflow-y: auto;">
 					<ul id="sortable" class="ui-sortable">
 						<li>
 							<div class="linkItem textOverflowNowrap">
-								<a href="#" target="_blank">Item 1aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</a>
+								<a href="http://www.sansou.co.jp" target="_blank">Item 1aiueoaiueoaiueo</a>
 							</div>
 						</li>
 						<li>
 							<div class="linkItem textOverflowNowrap">
-								<a href="#" target="_blank">Item 2</a>
+								<a href="http://www.sansou.co.jp" target="_blank">Item 2</a>
 							</div>
 						</li>
 						<li><div class="separator"></div></li>
 						<li>
 							<div class="linkItem textOverflowNowrap">
-								<a href="#" target="_blank">Item 3</a>
+								<a href="http://www.sansou.co.jp" target="_blank">Item 3</a>
 							</div>
 						</li>
 						<li>
 							<div class="linkItem textOverflowNowrap">
-								<a href="#" target="_blank">Item 4</a>
+								<a href="http://www.sansou.co.jp" target="_blank">Item 4</a>
 							</div>
 						</li>
 					</ul>
@@ -220,29 +220,31 @@
 </div>
 
 <!-- リンク集登録／編集フォーム -->
-<div id="frm-edit-link" class="modal hide fade">
+<div id="editLinkArea" class="modal hide fade">
 	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h3 id="myModalLabel">リンクの登録</h3>
 	</div>
 	<div class="modal-body">
 		<form id="frm-link-input" class="form-horizontal">
 			<div class="control-group">
-				<label class="control-label" for="linkTitle">タイトル</label>
-				<div class="controls">
+				<label class="control-label" for="linkTitle" style="width: 120px;">タイトル</label>
+				<div class="controls" style="margin-left: 140px;">
 					<input type="text" class="span4" id="linkTitle" name="linkTitle" placeholder="タイトル" maxlength="30">
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="linkUrl">URL</label>
-				<div class="controls">
+				<label class="control-label" for="linkUrl" style="width: 120px;">URL</label>
+				<div class="controls" style="margin-left: 140px;">
 					<input type="text" class="span4" id="linkUrl" name="linkUrl" placeholder="ex) http://www.sample.co.jp" maxlength="2048">
 				</div>
 			</div>
 		</form>
 	</div>
 	<div class="modal-footer">
-		<button type="button" id="btn-reg" class="btn btn-primary">登録</button>
-		<button type="button" id="btn-cancel" class="btn">キャンセル</button>
+		<button type="button" id="btnReg" class="btn btn-primary">登録</button>
+		<button type="button" id="btnEdit" class="btn btn-primary">更新</button>
+		<button type="button" id="btnCancel" class="btn">キャンセル</button>
 	</div>
 </div>
 
@@ -292,6 +294,200 @@
 			cursor: "move"
 		});
 		$("#sortable").sortable("disable");
+
+		// リンク集の編集前の状態を保持するオブジェクト
+		var saveCollectionOfLinks;
+
+		// リンク編集対象となる行データ
+		var $linkEditTarget = null;
+		
+		/**
+		 * リンクの追加リンク押下イベント
+		 */
+		$("#addLink").on("click", function(){
+			$("#btnEdit").hide();
+			$("#btnReg").show();
+			$("#editLinkArea").modal("show");
+		});
+		
+		/**
+		 * リンク集の編集リンク押下処理
+		 */
+		$("#link-edit").on("click", function(){
+			saveCollectionOfLinks = $("#sortable").html();
+			$("#span-link-edit").hide(100);
+			$("#span-link-commit-cancel").show(100);
+			$("#sortable").sortable("enable");
+			$("<span class='ui-icon ui-icon-arrowthick-2-n-s' style='cursor: move;'></span>").prependTo("#sortable li");
+			$("<div class='div-icon-del-edit'><a href='#' class='link-icon-edit'><i class='icon-edit' title='編集'></i></a> <a href='#' class='link-icon-trash'><i class='icon-trash' title='削除'></i></a></div>").appendTo("#sortable li");
+			$("#sortable li div.separator + div.div-icon-del-edit .link-icon-edit").addClass("visibleHidden");
+			$("#link-operation-btns").slideDown(400);
+			$("#sortable li a").each(function(){
+				$(this).attr("data-href", $(this).attr("href"));
+				$(this).attr("href", "#");
+			});
+		});
+		
+		/**
+		 * リンク集の完了リンク押下処理
+		 */
+		$("#link-commit").on("click", function(){
+			$("#span-link-edit").show(100);
+			$("#span-link-commit-cancel").hide(100);
+			$("#sortable").sortable("disable");
+			$("#sortable li > span").remove();
+			$("#sortable .div-icon-del-edit").remove();
+			$("#link-operation-btns").slideUp(400);
+			$("#sortable li a").each(function(){
+				$(this).attr("href", $(this).attr("data-href"));
+				$(this).removeAttr("data-href");
+			});
+		});
+		
+		/**
+		 * リンク集のキャンセルリンク押下処理
+		 */
+		$("#link-cancel").on("click", function(){
+			$("#span-link-edit").show(100);
+			$("#span-link-commit-cancel").hide(100);
+			$("#sortable").sortable("disable");
+			$("#sortable li > span").remove();
+			$("#link-operation-btns").slideUp(400);
+			
+			$("#sortable").html(saveCollectionOfLinks);
+			saveCollectionOfLinks = null;
+		});
+		
+		/**
+		 * リンク集の『区切りの追加』押下処理
+		 */
+		$("#addSeparate").on("click", function(){
+			// セパレーターのテンプレートをクローンして追加処理を行う
+			$("<li style='display: none;'></li>").wrapInner($("#linkSeparatorTemplate").children().clone(true)).appendTo("#sortable");
+			$("#sortable li:last").slideDown(400);
+		});
+
+		/**
+		 * リンク集の登録／編集画面右上にある×ボタン押下イベント
+		 */
+		$("button.close").on("click", function(){
+			resetForm4Bootstrap($("#editLinkArea form")[0], validator);
+		});
+		
+		/**
+		 * リンク集の編集処理（鉛筆アイコン押下時）
+		 * ** jQuery1.7より「live()」は非推奨となり、1.9から仕様不可となったようで、
+		 * ** live()の部分をon()に書き換えています。
+		 * ** ただし、jQuery1.9だとtwitter bootstrapも正常動作しないため、
+		 * ** このサンプルで使用しているjQueryは1.8.3です。
+		 */
+		$(document).on("click", ".link-icon-edit", function(event){
+			// 登録ボタン／更新ボタンの表示切替え
+			$("#btnEdit").show();
+			$("#btnReg").hide();
+			
+			// 編集対象となるリンクの行（LI）をセット
+			$linkEditTarget = $(this).closest("li");
+
+			// フォームに値をセット
+			$("#linkTitle").val($linkEditTarget.find("div.linkItem a").text());
+			$("#linkUrl").val($linkEditTarget.find("div.linkItem a").attr("data-href"));
+			
+			// フォームを表示
+			$("#editLinkArea").modal("show");
+		});
+		
+		/**
+		 * リンク集の削除処理（ゴミ箱アイコン押下時）
+		 */
+		$(document).on("click", ".link-icon-trash", function(event){
+			var $target = $(this).closest("li");
+			$target.slideUp(
+				250
+				, function(){
+					$target.remove();
+				});
+		});
+
+		/**
+		 * リンクの登録画面 登録ボタン押下時のイベント
+		 */
+		$("#btnReg").on("click", function(){
+			if ($("#editLinkArea form").valid()) {
+				// リンクのテンプレートをセット
+				var $template = $("<li style='display: none;'></li>").wrapInner($("#linkTemplate").children().clone(true));
+				
+				// リンクの値をセット
+				$template.find("div.linkItem a").attr("data-href", $("#linkUrl").val()).text($("#linkTitle").val());
+				
+				// 一覧に追加
+				$template.appendTo("#sortable");
+				
+				// アニメーションで追加処理を明示
+				$("#editLinkArea").modal("hide");
+				$("#sortable li:last").slideDown(400);
+				
+				resetForm4Bootstrap($("#editLinkArea form")[0], validator);
+			}
+		});
+
+		/**
+		 * リンク編集画面の更新ボタン押下時のイベント
+		 */
+		$("#btnEdit").on("click", function(){
+			if ($("#editLinkArea form").valid()) {
+				// 更新情報を反映
+				var $target = $linkEditTarget;
+				var $form = $("#editLinkArea form");
+
+				$target.find("div.linkItem a").text($form.find("#linkTitle").val());
+				$target.find("div.linkItem a").attr("data-href", $form.find("#linkUrl").val());
+				
+				// リンク登録・更新フォームの非表示・リセット
+				$("#editLinkArea").modal("hide");
+				resetForm4Bootstrap($("#editLinkArea form")[0], validator);
+			}
+		});
+		
+		/**
+		 * リンクの登録画面 キャンセルボタン押下時のイベント
+		 */
+		$("#editLinkArea #btnCancel").on("click", function(){
+			$("#editLinkArea").modal("hide");
+			resetForm4Bootstrap($("#editLinkArea form")[0], validator);
+		});
+		
+		/**
+		 * リンク登録画面表示中の黒い背景エリア押下時のイベント
+		 */
+		$(document).on("click", "div.modal-backdrop", function(){
+			resetForm4Bootstrap($("#editLinkArea form")[0], validator);
+		});
+		
+		/**
+		 * リンク登録・編集画面のバリデーション
+		 */
+		var validator = $("#editLinkArea form").validate({
+			rules: {
+				linkTitle: {
+					maxlength: 30
+					, required: true
+				}
+				, linkUrl: {
+					maxlength: 2048
+					, url: true
+					, required: true
+				}
+			}
+			, highlight: function(element) {
+				$(element).closest('.control-group').removeClass('success').addClass('error');
+			}
+			, success: function(element) {
+				element.text('OK!').addClass('valid').closest('.control-group').removeClass('error').addClass('success');
+			}
+			, onfocusout: false
+			, onclick: false
+		});
 	});
 </script>
 
