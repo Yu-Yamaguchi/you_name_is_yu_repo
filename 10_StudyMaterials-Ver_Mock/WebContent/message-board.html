@@ -13,7 +13,11 @@
 <link href="css/jquery-ui.css?v=1" rel="stylesheet">
 <link href="css/bootstrap.css?v=1" rel="stylesheet">
 <link href="css/font-awesome.css?v=1" rel="stylesheet">
+
+<link href="css/pqgrid.min.css?v=1" rel="stylesheet">
+
 <link href="css/common.css?v=1" rel="stylesheet">
+
 
 <style>
 #message-board-table thead tr th {
@@ -42,6 +46,39 @@
 
 .message-board-col-btn {
 	width: 15%;
+}
+
+div.pq-grid tr.pq-grid-row-hover td
+{
+	background-color:skyblue;	
+}
+/*restore background of number cell*/
+div.pq-cont tr.pq-grid-row-hover td.pq-grid-number-cell
+{
+	background-color:#e4ecf7;	
+}
+/*row selection*/
+div.pq-grid tr.pq-row-select td
+{
+	background-color:dodgerblue;
+	color:#fff;
+}
+/*restore background of number cell*/
+div.pq-cont tr.pq-row-select td.pq-grid-number-cell
+{
+	background-color:#e4ecf7;
+	color:#333; 
+}
+/*cell selection*/
+div.pq-grid tr td.pq-cell-select
+{
+	background-color:dodgerblue;   
+	color:#fff;
+}
+
+div.pq-grid-footer select {
+	height: 20px;
+	width: 40px;
 }
 
 </style>
@@ -106,6 +143,8 @@
 		
 		<!-- 中央エリア -->
 		<div class="span12">
+			<div id="grid"></div>
+			<!-- 
 			<table id="message-board-table" class="table table-striped table-bordered">
 				<thead>
 					<tr>
@@ -114,7 +153,7 @@
 						<th class="message-board-col-contents">本文</th>
 						<th class="message-board-col-updater">更新者</th>
 						<th class="message-board-col-updatetime">更新日時</th>
-						<th class="message-board-col-btn"></th>
+						<th class="message-board-col-btn"><button class="btn btn-small" style="padding: 2px 20px 2px 20px">新規登録</button></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -172,6 +211,7 @@
 					</tr>
 				</tbody>
 			</table>
+			 -->
 		</div>
 	</div>
 </div><!-- /.container -->
@@ -187,7 +227,131 @@
 <script src="js/jquery.validate.js?v=1"></script>
 <script src="js/jquery.validate.original.js?v=1"></script>
 <script src="js/bootstrap.js?v=1"></script>
+
+<script src="js/pqgrid.min.js?v=1"></script>
+
 <script src="js/common.js?v=1"></script>
 
+<script>
+$(function(){
+
+		var data = [['タイトル１', '本文１', '山口　優', '2013/03/01 21:17'],
+			['タイトル２', '本文２', '山口　優', '2013/02/28 16:27'],
+			['タイトル３', '本文３', '山口　優', '2013/02/27 15:15'],
+			['タイトル４', '本文４', '山口　優', '2013/02/26 20:30'],
+			['タイトル５', '本文５', '山口　優', '2013/02/25 11:05'],
+			['タイトル２', '本文２', '山口　優', '2013/02/28 16:27'],
+			['タイトル３', '本文３', '山口　優', '2013/02/27 15:15'],
+			['タイトル４', '本文４', '山口　優', '2013/02/26 20:30'],
+			['タイトル２', '本文２', '山口　優', '2013/02/28 16:27'],
+			['タイトル３', '本文３', '山口　優', '2013/02/27 15:15'],
+			['タイトル４', '本文４', '山口　優', '2013/02/26 20:30'],
+			['タイトル２', '本文２', '山口　優', '2013/02/28 16:27'],
+			['タイトル３', '本文３', '山口　優', '2013/02/27 15:15'],
+			['タイトル４', '本文４', '山口　優', '2013/02/26 20:30'],
+			['タイトル２', '本文２', '山口　優', '2013/02/28 16:27'],
+			['タイトル３', '本文３', '山口　優', '2013/02/27 15:15'],
+			['タイトル４', '本文４', '山口　優', '2013/02/26 20:30'],
+			['タイトル２', '本文２', '山口　優', '2013/02/28 16:27'],
+			['タイトル３', '本文３', '山口　優', '2013/02/27 15:15'],
+			['タイトル４', '本文４', '山口　優', '2013/02/26 20:30'],
+			['タイトル２', '本文２', '山口　優', '2013/02/28 16:27'],
+			['タイトル３', '本文３', '山口　優', '2013/02/27 15:15'],
+			['タイトル４', '本文４', '山口　優', '2013/02/26 20:30'],
+			['タイトル２', '本文２', '山口　優', '2013/02/28 16:27'],
+			['タイトル３', '本文３', '山口　優', '2013/02/27 15:15'],
+			['タイトル４', '本文４', '山口　優', '2013/02/26 20:30'],
+			['タイトル２', '本文２', '山口　優', '2013/02/28 16:27'],
+			['タイトル３', '本文３', '山口　優', '2013/02/27 15:15'],
+			['タイトル４', '本文４', '山口　優', '2013/02/26 20:30'],
+			['タイトル２', '本文２', '山口　優', '2013/02/28 16:27'],
+			['タイトル３', '本文３', '山口　優', '2013/02/27 15:15'],
+			['タイトル４', '本文４', '山口　優', '2013/02/26 20:30'],
+			['タイトル２', '本文２', '山口　優', '2013/02/28 16:27'],
+			['タイトル３', '本文３', '山口　優', '2013/02/27 15:15'],
+			['タイトル４', '本文４', '山口　優', '2013/02/26 20:30'],
+			['タイトル２', '本文２', '山口　優', '2013/02/28 16:27'],
+			['タイトル３', '本文３', '山口　優', '2013/02/27 15:15'],
+			['タイトル４', '本文４', '山口　優', '2013/02/26 20:30'],
+			['タイトル２', '本文２', '山口　優', '2013/02/28 16:27'],
+			['タイトル３', '本文３', '山口　優', '2013/02/27 15:15'],
+			['タイトル４', '本文４', '山口　優', '2013/02/26 20:30'],
+			['タイトル２', '本文２', '山口　優', '2013/02/28 16:27'],
+			['タイトル３', '本文３', '山口　優', '2013/02/27 15:15'],
+			['タイトル４', '本文４', '山口　優', '2013/02/26 20:30'],
+			['タイトル２', '本文２', '山口　優', '2013/02/28 16:27'],
+			['タイトル３', '本文３', '山口　優', '2013/02/27 15:15'],
+			['タイトル４', '本文４', '山口　優', '2013/02/26 20:30'],
+			['タイトル２', '本文２', '山口　優', '2013/02/28 16:27'],
+			['タイトル３', '本文３', '山口　優', '2013/02/27 15:15'],
+			['タイトル４', '本文４', '山口　優', '2013/02/26 20:30'],
+			['タイトル２', '本文２', '山口　優', '2013/02/28 16:27'],
+			['タイトル３', '本文３', '山口　優', '2013/02/27 15:15'],
+			['タイトル４', '本文４', '山口　優', '2013/02/26 20:30'],
+			['タイトル２', '本文２', '山口　優', '2013/02/28 16:27'],
+			['タイトル３', '本文３', '山口　優', '2013/02/27 15:15'],
+			['タイトル４', '本文４', '山口　優', '2013/02/26 20:30'],
+			['タイトル２', '本文２', '山口　優', '2013/02/28 16:27'],
+			['タイトル３', '本文３', '山口　優', '2013/02/27 15:15'],
+			['タイトル４', '本文４', '山口　優', '2013/02/26 20:30'],
+			['タイトル２', '本文２', '山口　優', '2013/02/28 16:27'],
+			['タイトル３', '本文３', '山口　優', '2013/02/27 15:15'],
+			['タイトル４', '本文４', '山口　優', '2013/02/26 20:30'],
+			['タイトル２', '本文２', '山口　優', '2013/02/28 16:27'],
+			['タイトル３', '本文３', '山口　優', '2013/02/27 15:15'],
+			['タイトル４', '本文４', '山口　優', '2013/02/26 20:30'],
+			['タイトル２', '本文２', '山口　優', '2013/02/28 16:27'],
+			['タイトル３', '本文３', '山口　優', '2013/02/27 15:15'],
+			['タイトル４', '本文４', '山口　優', '2013/02/26 20:30'],
+			['タイトル２', '本文２', '山口　優', '2013/02/28 16:27'],
+			['タイトル３', '本文３', '山口　優', '2013/02/27 15:15'],
+			['タイトル４', '本文４', '山口　優', '2013/02/26 20:30']
+		];
+ 
+		// var obj = { width: 700, height: 400, title: "ParamQuery Grid Example",resizable:true,draggable:true };
+		/*
+		obj.colModel = [{ title: "Rank", width: 100, dataType: "integer" },
+		{ title: "Company", width: 200, dataType: "string" },
+		{ title: "Revenues ($ millions)", width: 150, dataType: "float", align: "right" },
+		{ title: "Profits ($ millions)", width: 150, dataType: "float", align: "right"}];
+		*/
+
+		var $grid = $("#grid").pqGrid({
+			width: 935
+			, height: 400
+			, title: "ParamQuery Grid Example"
+			, resizable: false
+			, draggable: false
+			, columnBorders: true
+			, colModel: [
+				{ title: "タイトル", width: 200, dataType: "string", editable: false }
+				, { title: "本文", width: 300, dataType: "string", editable: false }
+				, { title: "更新者", width: 150, dataType: "string", editable: false }
+				, { title: "更新日時", width: 150, dataType: "string", editable: false }
+			]
+			, dataModel: {
+				data: data
+				, location: "local"
+				, sorting: "local"
+				, paging: "local"
+				, dataType: "JSON"
+				, curPage: 1
+				, rPP: 20
+				, sortIndex: 2
+				, sortDir: "up"
+				, rPPOptions: [10, 20, 30, 40, 50]
+			}
+		});
+
+		// テーブルの行にフォーカスをあてたりするスタイルを適用するための処理
+		$grid.on("mouseenter", "tr.pq-grid-row", function (evt) {
+			$(this).addClass("pq-grid-row-hover");
+		});
+		$grid.on("mouseleave", "tr.pq-grid-row", function (evt) {
+			$(this).removeClass("pq-grid-row-hover");
+		});
+	 
+});
+</script>
 </body>
 </html>
