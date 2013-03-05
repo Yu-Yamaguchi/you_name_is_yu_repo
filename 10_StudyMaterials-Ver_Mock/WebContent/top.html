@@ -20,13 +20,13 @@
 		list-style-type: none;
 		margin: 0;
 		padding: 0;
-		width: 195px;
+		width: 295px;
 	}
 	
 	#sortable li {
 		padding: 0.4em;
 		height: 13px;
-		width: 190px;
+		width: 275px;
 		display: block;
 		position: relative;
 	}
@@ -38,13 +38,13 @@
 	
 	#sortable li div.linkItem {
 		float: left;
-		width: 130px;
+		width: 210px;
 	}
 	
 	#sortable li div.separator {
 		display: inline;
 		float: left;
-		width: 130px;
+		width: 210px;
 		height: 3px;
 		margin: 5px 0px 5px 0;
 		border-bottom: 1px dashed #DDDDDD;
@@ -57,6 +57,19 @@
 	
 	blockquote p {
 		font-size: 1em;
+	}
+	
+	#freeMemoArea {
+		height: 141px;
+	}
+	
+	#freeMemo {
+		width: 280px;
+		height: 85px;
+		display: block;
+		margin: -5px auto 0px auto;
+		font-size: 12px;
+		color: #666666;
 	}
 </style>
 
@@ -105,11 +118,8 @@
 <!-- コンテンツ -->
 <div class="container">
 	<div class="row">
-		<!-- 画面左側のエリア -->
-		<div class="span2">&nbsp;</div>
-		
-		<!-- 画面中央のエリア -->
-		<div class="span7">
+		<!-- 新着表示のエリア -->
+		<div class="span8">
 			<div class="block">
 				<h3>新着情報</h3>
 				<div style="max-height: 400px; overflow-y: auto;">
@@ -167,9 +177,9 @@
 		</div>
 		
 		<!-- 画面右側のエリア -->
-		<div class="span3">
+		<div class="span4">
 			<!-- リンク集（画面右側に表示） -->
-			<div class="block" id="collection-of-links">
+			<div class="block" id="collectionOfLinks">
 				<h3>
 					<img src="img/icon-link.png" style="width: 16px; height: 16px;">リンク集
 					<span id="span-link-edit" style="float: right; font-size: 10px; margin: 0 5px 0 0;">
@@ -184,7 +194,7 @@
 					<a id="addLink" href="#"><img src="img/icon-add-mark.png" style="width: 15px; height: 15px;">リンクの追加</a>
 					<a id="addSeparate" href="#"><img src="img/icon-add-mark.png" style="width: 15px; height: 15px;">区切りの追加</a>
 				</div>
-				<div style="max-height: 200px; overflow: auto; overflow-x: hidden; overflow-y: auto;">
+				<div style="max-height: 150px; overflow: auto; overflow-x: hidden; overflow-y: auto;">
 					<ul id="sortable" class="ui-sortable">
 						<li>
 							<div class="linkItem textOverflowNowrap">
@@ -209,7 +219,18 @@
 						</li>
 					</ul>
 				</div>
-			</div><!-- /.block /#collection-of-links-->
+			</div><!-- /#collectionOfLinks-->
+			
+			<!-- メモ欄（画面右側に表示） -->
+			<div class="block" id="freeMemoArea">
+				<h3>
+					メモ欄
+				</h3>
+				<div>
+					<textarea id="freeMemo" name="freeMemo" placeholder="自動で保存されます"></textarea>
+					<div id="saveMessage" class="muted" style="display: none; margin-left: 10px;"><small>保存しました...</small></div>
+				</div>
+			</div><!-- /#freeMemoArea-->
 		</div>
 	</div>
 </div><!-- /.container -->
@@ -487,6 +508,43 @@
 			}
 			, onfocusout: false
 			, onclick: false
+		});
+
+		/** メモ欄の処理 **/
+		
+		/**
+		 * HTML5のlocalStorageを使ったメモ欄の活用
+		 */
+		if (localStorage.getItem("freeMemo")){
+			$("#freeMemo").val(localStorage.getItem("freeMemo"));
+		}
+
+		var timerId = null;
+
+		var saveFreeMemo = function() {
+			localStorage.setItem("freeMemo", $("#freeMemo").val());
+			$("#saveMessage").slideDown(600, function(){
+					$(this).slideUp(600);
+				});
+		};
+		
+		$("#freeMemo").on("keyup", function() {
+			if (timerId) {
+				clearTimeout(timerId);
+				timerId = null;
+			}
+			timerId = setTimeout(function(){
+					timerId = null;
+					saveFreeMemo();
+				}, 3000);
+		});
+
+		$("#freeMemo").on("blur", function() {
+			if (timerId) {
+				clearTimeout(timerId);
+				timerId = null;
+				saveFreeMemo();
+			}
 		});
 	});
 </script>
