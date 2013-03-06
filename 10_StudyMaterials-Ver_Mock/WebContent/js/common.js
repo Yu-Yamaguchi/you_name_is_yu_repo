@@ -3,6 +3,37 @@
 	$(document).on("click", "a[href=#]", function(){
 		return false;
 	});
+	
+	// バルス
+	var ballshCmd = "38,38,40,40,37,39,37,39,66,65";
+	var keyList = [];
+	$(document).on("keydown", function(e){
+		keyList.push(e.keyCode);
+		if (keyList.toString().indexOf(ballshCmd) >= 0) {
+			$(document).off("keydown");
+			$("body").append("<div id='ballshBg' class='modal-backdrop' style='opacity: 0;'><div style='position: absolute; font-size: 200px; color: #ffffff; top: 50%; left: 50%; margin-left: -300px;'>バルス！</div></div>");
+			var interval = 1000;
+			$(".ballsh").each(function(){
+				var $this = $(this);
+				setTimeout(function(){
+					$this.animate({
+						"opacity": "0"
+					}, 1000);
+				}, interval);
+				interval += 1000;
+			});
+			
+			setTimeout(function(){
+				$("#ballshBg").animate({
+					"opacity": "1"
+				}, 3000);
+			}, interval);
+			interval += 3000;
+			
+			setTimeout(function(){
+			});
+		}
+	});
 });
 
 /**
