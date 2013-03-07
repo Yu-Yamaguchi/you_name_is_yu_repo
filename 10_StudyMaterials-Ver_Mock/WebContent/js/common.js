@@ -11,17 +11,24 @@
 		keyList.push(e.keyCode);
 		if (keyList.toString().indexOf(ballshCmd) >= 0) {
 			$(document).off("keydown");
+			$("body").effect("shake", "slow");
 			$("body").append("<div id='ballshBg' class='modal-backdrop' style='opacity: 0;'><div style='position: absolute; font-size: 200px; color: #ffffff; top: 50%; left: 50%; margin-left: -300px;'>バルス！</div></div>");
-			var interval = 1000;
-			$(".ballsh").each(function(){
+						
+			var colmap = $(".ballsh").map(function(){
 				var $this = $(this);
-				setTimeout(function(){
-					$this.animate({
-						"opacity": "0"
-					}, 1000);
-				}, interval);
-				interval += 1000;
+				$this.collapse = function(){
+					$this.effect("drop",{ direction: "down" });
+				}
+				return $this;
 			});
+			
+			var collapseDur = 500;
+			var interval = collapseDur;
+			for(var i = colmap.length; i--;){
+				var self = colmap[i];
+				self.collapse.applyTimeout(interval,self);
+				interval+=collapseDur;
+			}
 			
 			setTimeout(function(){
 				$("#ballshBg").animate({
@@ -32,6 +39,7 @@
 			
 			setTimeout(function(){
 			});
+			
 		}
 	});
 });
@@ -75,4 +83,16 @@ function confirm(heading, question, okCallback) {
 		confirmModal.modal('hide');
 	});
 	confirmModal.modal('show');	 
+};
+
+/**
+ setTimesoutをFunctionのプロトタイプとして拡張する。
+ */
+Function.prototype.applyTimeout = function (msec, self, args) {
+  var fnc = this;
+  return setTimeout(
+    function () {
+      fnc.apply(self, args);
+    },
+    msec);
 };
