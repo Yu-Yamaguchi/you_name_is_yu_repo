@@ -3,17 +3,18 @@
 	$(document).on("click", "a[href=#]", function(){
 		return false;
 	});
-	
+
 	// バルス
 	var ballshCmd = "38,38,40,40,37,39,37,39,66,65";
 	var keyList = [];
+
 	$(document).on("keydown", function(e){
 		keyList.push(e.keyCode);
 		if (keyList.toString().indexOf(ballshCmd) >= 0) {
 			$(document).off("keydown");
-			$("body").effect("shake", "slow");
+			$("#body").effect("shake", "slow");
 			$("body").append("<div id='ballshBg' class='modal-backdrop' style='opacity: 0;'><div style='position: absolute; font-size: 200px; color: #ffffff; top: 50%; left: 50%; margin-left: -300px;'>バルス！</div></div>");
-						
+
 			var colmap = $(".ballsh").map(function(){
 				var $this = $(this);
 				$this.collapse = function(){
@@ -21,7 +22,7 @@
 				}
 				return $this;
 			});
-			
+
 			var collapseDur = 500;
 			var interval = collapseDur;
 			for(var i = colmap.length; i--;){
@@ -29,17 +30,17 @@
 				self.collapse.applyTimeout(interval,self);
 				interval+=collapseDur;
 			}
-			
+
 			setTimeout(function(){
 				$("#ballshBg").animate({
 					"opacity": "1"
 				}, 3000);
 			}, interval);
 			interval += 3000;
-			
+
 			setTimeout(function(){
 			});
-			
+
 		}
 	});
 });
@@ -58,11 +59,11 @@ function resetForm4Bootstrap(form, validator) {
 }
 
 /**
- * twitter bootstrap用 confirmダイアログ表示共通部品 
+ * twitter bootstrap用 confirmダイアログ表示共通部品
  */
 function confirm(heading, question, okCallback) {
-	var confirmModal = 
-	  $('<div class="modal hide fade">' +	
+	var confirmModal =
+	  $('<div class="modal hide fade">' +
 			'<div class="modal-header">' +
 				'<a class="close" data-dismiss="modal" >&times;</a>' +
 				'<h3>' + heading +'</h3>' +
@@ -82,7 +83,7 @@ function confirm(heading, question, okCallback) {
 		okCallback();
 		confirmModal.modal('hide');
 	});
-	confirmModal.modal('show');	 
+	confirmModal.modal('show');
 };
 
 /**

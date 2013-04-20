@@ -22,7 +22,7 @@
 		padding: 0;
 		width: 295px;
 	}
-	
+
 	#sortable li {
 		padding: 0.4em;
 		height: 13px;
@@ -30,17 +30,17 @@
 		display: block;
 		position: relative;
 	}
-	
+
 	#sortable li span.ui-icon {
 		float: left;
 		margin-left: 3px;
 	}
-	
+
 	#sortable li div.linkItem {
 		float: left;
 		width: 210px;
 	}
-	
+
 	#sortable li div.separator {
 		display: inline;
 		float: left;
@@ -49,20 +49,20 @@
 		margin: 5px 0px 5px 0;
 		border-bottom: 1px dashed #DDDDDD;
 	}
-	
+
 	#sortable li div.div-icon-del-edit {
 		float: left;
 		width: 40px;
 	}
-	
+
 	blockquote p {
 		font-size: 1em;
 	}
-	
+
 	#freeMemoArea {
 		height: 141px;
 	}
-	
+
 	#freeMemo {
 		width: 280px;
 		height: 85px;
@@ -78,6 +78,8 @@
 </head>
 
 <body>
+
+<div id="body">
 
 <!-- ヘッダー -->
 <div id="header" class="ballsh">
@@ -147,7 +149,7 @@
 							</li>
 						</ul>
 					</div>
-					
+
 					<div class="todoNews">
 						<h5>
 							<i class="icon-list-alt" style="margin: 0 10px 0 10px;"></i>
@@ -175,7 +177,7 @@
 				</div>
 			</div><!-- /.block -->
 		</div>
-		
+
 		<!-- 画面右側のエリア -->
 		<div class="span4">
 			<!-- リンク集（画面右側に表示） -->
@@ -220,7 +222,7 @@
 					</ul>
 				</div>
 			</div><!-- /#collectionOfLinks-->
-			
+
 			<!-- メモ欄（画面右側に表示） -->
 			<div class="block ballsh" id="freeMemoArea">
 				<h3>
@@ -300,14 +302,12 @@
 </div>
 
 <!-- javascript -->
-<script src="js/jquery.js?v=2"></script>
-<script src="js/jquery-ui.js?v=1"></script>
+<script src="js/jquery.js?v=1"></script>
+<script src="js/jquery-ui.js?v=2"></script>
 <script src="js/jquery.validate.js?v=1"></script>
 <script src="js/jquery.validate.original.js?v=1"></script>
 <script src="js/bootstrap.js?v=1"></script>
 <script src="js/common.js?v=1"></script>
-
-<script src="js/collection-of-links.js"></script>
 
 <script>
 	$(function(){
@@ -321,7 +321,7 @@
 
 		// リンク編集対象となる行データ
 		var $linkEditTarget = null;
-		
+
 		/**
 		 * リンクの追加リンク押下イベント
 		 */
@@ -330,7 +330,7 @@
 			$("#btnReg").show();
 			$("#editLinkArea").modal("show");
 		});
-		
+
 		/**
 		 * リンク集の編集リンク押下処理
 		 */
@@ -348,7 +348,7 @@
 				$(this).attr("href", "#");
 			});
 		});
-		
+
 		/**
 		 * リンク集の完了リンク押下処理
 		 */
@@ -364,7 +364,7 @@
 				$(this).removeAttr("data-href");
 			});
 		});
-		
+
 		/**
 		 * リンク集のキャンセルリンク押下処理
 		 */
@@ -374,11 +374,11 @@
 			$("#sortable").sortable("disable");
 			$("#sortable li > span").remove();
 			$("#link-operation-btns").slideUp(400);
-			
+
 			$("#sortable").html(saveCollectionOfLinks);
 			saveCollectionOfLinks = null;
 		});
-		
+
 		/**
 		 * リンク集の『区切りの追加』押下処理
 		 */
@@ -394,7 +394,7 @@
 		$("button.close").on("click", function(){
 			resetForm4Bootstrap($("#editLinkArea form")[0], validator);
 		});
-		
+
 		/**
 		 * リンク集の編集処理（鉛筆アイコン押下時）
 		 * ** jQuery1.7より「live()」は非推奨となり、1.9から仕様不可となったようで、
@@ -406,18 +406,18 @@
 			// 登録ボタン／更新ボタンの表示切替え
 			$("#btnEdit").show();
 			$("#btnReg").hide();
-			
+
 			// 編集対象となるリンクの行（LI）をセット
 			$linkEditTarget = $(this).closest("li");
 
 			// フォームに値をセット
 			$("#linkTitle").val($linkEditTarget.find("div.linkItem a").text());
 			$("#linkUrl").val($linkEditTarget.find("div.linkItem a").attr("data-href"));
-			
+
 			// フォームを表示
 			$("#editLinkArea").modal("show");
 		});
-		
+
 		/**
 		 * リンク集の削除処理（ゴミ箱アイコン押下時）
 		 */
@@ -437,17 +437,17 @@
 			if ($("#editLinkArea form").valid()) {
 				// リンクのテンプレートをセット
 				var $template = $("<li style='display: none;'></li>").wrapInner($("#linkTemplate").children().clone(true));
-				
+
 				// リンクの値をセット
 				$template.find("div.linkItem a").attr("data-href", $("#linkUrl").val()).text($("#linkTitle").val());
-				
+
 				// 一覧に追加
 				$template.appendTo("#sortable");
-				
+
 				// アニメーションで追加処理を明示
 				$("#editLinkArea").modal("hide");
 				$("#sortable li:last").slideDown(400);
-				
+
 				resetForm4Bootstrap($("#editLinkArea form")[0], validator);
 			}
 		});
@@ -463,13 +463,13 @@
 
 				$target.find("div.linkItem a").text($form.find("#linkTitle").val());
 				$target.find("div.linkItem a").attr("data-href", $form.find("#linkUrl").val());
-				
+
 				// リンク登録・更新フォームの非表示・リセット
 				$("#editLinkArea").modal("hide");
 				resetForm4Bootstrap($("#editLinkArea form")[0], validator);
 			}
 		});
-		
+
 		/**
 		 * リンクの登録画面 キャンセルボタン押下時のイベント
 		 */
@@ -477,14 +477,14 @@
 			$("#editLinkArea").modal("hide");
 			resetForm4Bootstrap($("#editLinkArea form")[0], validator);
 		});
-		
+
 		/**
 		 * リンク登録画面表示中の黒い背景エリア押下時のイベント
 		 */
 		$(document).on("click", "div.modal-backdrop", function(){
 			resetForm4Bootstrap($("#editLinkArea form")[0], validator);
 		});
-		
+
 		/**
 		 * リンク登録・編集画面のバリデーション
 		 */
@@ -511,7 +511,7 @@
 		});
 
 		/** メモ欄の処理 **/
-		
+
 		/**
 		 * HTML5のlocalStorageを使ったメモ欄の活用
 		 */
@@ -527,7 +527,7 @@
 					$(this).slideUp(600);
 				});
 		};
-		
+
 		$("#freeMemo").on("keyup", function() {
 			if (timerId) {
 				clearTimeout(timerId);
@@ -548,6 +548,8 @@
 		});
 	});
 </script>
+
+</div><!-- ./#body -->
 
 </body>
 </html>
